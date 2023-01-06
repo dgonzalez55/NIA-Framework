@@ -1,0 +1,12 @@
+# Redirect to front controller
+RewriteEngine On
+# RewriteBase /
+RewriteCond %{REQUEST_FILENAME} !-d
+RewriteCond %{REQUEST_FILENAME} !-f
+RewriteRule ^(.*)$ index.php [QSA,L]
+
+# PHP settings
+php_flag magic_quotes_gpc off
+php_flag register_globals off
+php_flag short_open_tag on
+php_value date.timezone Europe/Madrid

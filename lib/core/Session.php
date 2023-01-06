@@ -19,6 +19,7 @@
         public static function start():void{
             if(session_status() == PHP_SESSION_NONE){
                 session_name(APP_SESSION_NAME);
+                session_set_cookie_params(APP_SESSION_TIME,'/',APP_DOMAIN,true,true);
                 session_start();
             }
         }
@@ -34,7 +35,7 @@
         public static function destroy():void{
             Session::start();
             unset($_SESSION);
-            setcookie(session_name(),"",time()-3600);
+            setcookie(session_name(),"",time()-3600,'/',APP_DOMAIN,true,true);
             session_destroy();
         }
     }

@@ -55,7 +55,7 @@
         public function save(string $cookieNameSuffix):void{
             $cookieName = "marcatges" . hash("sha512",$cookieNameSuffix);
             $cookieValue = json_encode($this->all());
-            setcookie($cookieName,$cookieValue,0,'/');
+            setcookie($cookieName,$cookieValue,0,'/',APP_DOMAIN,true,true);
         }
 
         public function load(string $cookieNameSuffix):void{
