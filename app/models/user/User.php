@@ -2,8 +2,6 @@
     namespace app\models\user;
 
     use lib\core\mvc\Model;
-    use app\models\user\UserMySQL;
-    use app\models\user\UserHardcoded;
     use app\models\regEntries\RegisterEntries;
 
     //Domain Model Class
@@ -20,17 +18,15 @@
             $this->role         = $role;
             $this->email        = $email;
             $this->username     = explode("@",$email)[0];
-            $this->regEntries   = new RegisterEntries();
-            $this->regEntries->load($this->username);
+            $this->regEntries   = RegisterEntries::load($this->idUser);
         }
 
-        public static function load(string $email, string $pass, string $dbType):?self{
-            return $dbType==DB_DATASET_MARIADB ? UserMySQL::loadUser($email,$pass) : UserHardcoded::loadUser($email,$pass);
+        public static function load(string $email, string $pass):?self{
+            return DB_DATASET_TYPE==DB_DATASET_MARIADB ? UserMySQL::loadUser($email,$pass) : UserHardcoded::loadUser($email,$pass);
         }
 
         public function newRegisterEntry():void{
-            $this->regEntries->addNext();
-            $this->regEntries->save($this->username);
+            $this->regEntries->addNext($this->idUser);
         }
 
         public function __get(string $key){

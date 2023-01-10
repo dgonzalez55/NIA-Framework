@@ -3,9 +3,10 @@
 
     use \ArrayIterator;
     use \lib\core\mvc\Model;
-    use \app\datasets\RegisterEntriesDataSetCookie;
 
-    class RegisterEntries extends ArrayIterator implements Model{
+    //Domain Model Class
+    /** @SuppressWarnings(PHPMD.StaticAccess) */
+    abstract class RegisterEntries extends ArrayIterator implements Model{
         public function __construct(RegisterEntry ...$entry){
             parent::__construct($entry);
         }
@@ -45,32 +46,19 @@
             return $this->count()==0 ? 1 : $this->getLast()->registerId+1;
         }
 
-        public function addNext():void{
+        public function addNext(int $idUser):void{
             $idReg  = $this->getNextRegisterEntryId();
             $type   = $this->getNextRegisterEntryType();
             $time   = date('Y-m-d H:i:s');
             $this->add(new RegisterEntry($idReg,$type,$time));
+            $this->save($idUser);
         }
 
-        public function save(string $cookieNameSuffix):void{
-            $cookieName = "marcatges" . hash("sha512",$cookieNameSuffix);
-            $cookieValue = json_encode($this->all());
-            setcookie($cookieName,$cookieValue,0,'/',APP_DOMAIN,true,true);
+        public static function load(int $idUser):?self{
+            return DB_DATASET_TYPE==DB_DATASET_MARIADB ? RegisterEntriesMySQL::load($idUser) : RegisterEntriesCookie::load($idUser);
         }
 
-        public function load(string $cookieNameSuffix):void{
-            $cookieName = "marcatges" . hash("sha512",$cookieNameSuffix);
-            $regEntries = isset($_COOKIE[$cookieName]) ? json_decode($_COOKIE[$cookieName]) : [];
-            foreach($regEntries as $regEntry){
-                $regId      = isset($regEntry->id) ? $regEntry->id : null;
-                $regType    = isset($regEntry->type) ? $regEntry->type : null;
-                $timestamp  = isset($regEntry->timestamp) ? $regEntry->timestamp : null;
-                if(!is_null($regId) && !is_null($regType) && !is_null($timestamp)){
-                    $regEntry = new RegisterEntry($regId,$regType,$timestamp);
-                    $this->add($regEntry);
-                }
-            }
-        }
+        public abstract function save(int $idUser):void;
 
         public function lastRecordInfoToHTML(){
             $html = "";

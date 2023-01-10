@@ -1,6 +1,5 @@
 <?php 
     namespace app\models\user;
-    use app\models\user\User;
     use app\datasources\MySQLDB;
 
     // ? No podem tenir una propietat de tipus MySQL ja que utilitza la llibreria PDO que no és serialitzable

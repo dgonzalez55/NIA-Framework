@@ -1,4 +1,4 @@
-<?php echo $this->loginFailed ? "<p class=\"error\">Revisa l'adreça de correu i/o la contrassenya</p>" : ""; ?>
+<?=$this->loginFailed ? "<p class=\"error\">Revisa l'adreça de correu i/o la contrassenya</p>" : ""?>
 <!-- Formulari de Login -->
 <form method="POST" action="/">
     <label for="iEmail">Email</label>

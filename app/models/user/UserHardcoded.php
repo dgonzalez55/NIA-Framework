@@ -1,6 +1,5 @@
 <?php 
     namespace app\models\user;
-    use app\models\user\User;
     use app\datasources\HardcodedDB;
 
     // * Aquesta classe juga un paper de tipus ORM (Object Relational Mapping), mappeja les dades de la base de dades a objectes

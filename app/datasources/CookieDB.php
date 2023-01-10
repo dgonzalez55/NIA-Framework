@@ -5,7 +5,7 @@
     
     /** @SuppressWarnings(PHPMD) */
     class CookieDB extends DataManager implements DataSource{
-        private array $marcatges = [];
+        private array $db = [];
 
         protected function __construct(){
             $this->open();
@@ -17,8 +17,8 @@
  
          public function open():void{
             foreach($_COOKIE as $key => $value){
-                if(strpos($key,"marcatges")===0){
-                    $this->marcatges[$key] = json_decode($value,true);
+                if(strpos($key,"db_")===0){
+                    $this->db[$key] = json_decode($value,true);
                 }
             }
          }
@@ -27,26 +27,40 @@
             unset($this->marcatges);
          }
         
-        //TODO: Implementar els mètodes de la interfície DataSource
-        public function find(string $username, array $filter = [], int $pageResults = 100, int $pageNumber = 1):array{
-            $cookieName = "marcatges".hash("sha512",$username);
-            return $this->marcatges[$cookieName] ?? [];
+        public function find(string $table, array $filter = [], int $pageResults = 100, int $pageNumber = 1):array{
+            $cookieName = "db_".$table;
+            return $this->db[$cookieName] ?? [];
 
         }
+
+        //TODO: Implementar aquest mètode
         public function findOne(string $table, array $filter = []):array{
             return [];
         }
+
         public function insert(string $table, array $data):bool{
-            return false;
+            $result = false;
+            if(!empty($table) && !empty($data)){
+                $cookieName = "db_".$table;
+                $cookieValue = json_encode($data);
+                setcookie($cookieName,$cookieValue,0,'/',APP_DOMAIN,true,true);
+                $result = true;
+            }
+            return $result;
         }
+        
+        //TODO: Implementar aquest mètode
         public function delete(string $table, array $filter = []):bool{
             return false;
         }
+
+        //TODO: Implementar aquest mètode
         public function update(string $table, array $data, array $filter = []):bool{
             return false;
         }
+        
+        //TODO: Implementar aquest mètode
         public function query(string $query, array $params):array{
             return [];
         }
-
     }

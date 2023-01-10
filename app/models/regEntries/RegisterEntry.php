@@ -14,6 +14,10 @@
             $this->registerTimestamp = $timestamp;
         }
 
+        public function setId(int $newId){
+            $this->registerId = $newId;
+        }
+
         public function __get(string $key){
             return $this->$key;
         }

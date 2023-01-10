@@ -161,4 +161,17 @@
             }
             return $result;
         }
+
+        //Aquest mètode no pertany a la interfície DataSource, però s'hi podria afegir si convingués
+        public function lastInsertedId():int{
+            $result = -1;
+            try{
+                if($this->dbConnection){
+                    $result = $this->dbConnection->lastInsertId();
+                }
+            }catch(\PDOException $e){
+                echo 'Error: '.$e->getMessage();
+            }
+            return $result;
+        }
     }

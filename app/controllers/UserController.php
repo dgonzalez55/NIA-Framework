@@ -36,7 +36,7 @@
             $mail = isset($params['user']) ? filter_var($params['user'],FILTER_SANITIZE_EMAIL) : null;
             $pass = isset($params['pass']) ? filter_var($params['pass'],FILTER_SANITIZE_STRING) : null;
             if($mail && $pass){
-                $this->user = User::load($mail,$pass,DB_DATASET_TYPE);
+                $this->user = User::load($mail,$pass);
                 if(isset($this->user)){
                     Session::start();
                     Session::set('user',$this->user);
