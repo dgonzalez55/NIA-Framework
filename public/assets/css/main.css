@@ -1,0 +1,38 @@
+/* PUT YOUR CSS CODE HERE */ 
+
+*{
+    padding:0;
+    margin:0;
+}
+
+html, 
+body {
+    margin-top: 1.5em;
+    width: 100%;
+    background: #ededed;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+}
+
+#pagewrapper{
+    border-radius: 12px;
+    background-color: white;
+    display: flex;
+    flex-direction: column;
+    text-align: center;
+    justify-content: center;
+    align-items: center;
+    font-family: 'Open Sans', Helvetica, Arial, sans-serif;
+    padding: 1rem;
+    height: 90%;
+    width: 80%;
+}
+
+#pagewrapper > *{
+    margin: 0.5em;
+}
+
+#pagewrapper > h1{
+    text-transform: uppercase;
+}
