@@ -1,9 +1,6 @@
 <?php 
     use lib\mvc\Router;
 
-    //GET ENDPOINTS
-    Router::addRoute("GET",    "/",           "app\controllers\UserController",   "login");
-    Router::addRoute("GET",    "/logout",     "app\controllers\UserController",   "logout");
-    //POST ENDPOINTS
-    Router::addRoute("POST",   "/",           "app\controllers\UserController",   "processLogin");
-    Router::addRoute("POST",   "/register",   "app\controllers\UserController",   "processRegisterEntry");
+    //PUT YOUR ENDPOINTS HERE
+    //Router::addRoute("METHOD","PATH","CONTROLLER","ACTION");
+    Router::addRoute("GET","/{firstname}?/{lastname}?","app\controllers\HelloWorldController","sayHello");
