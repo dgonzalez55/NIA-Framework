@@ -1,6 +1,6 @@
 <?php 
     namespace app\models\regEntries;
-    use app\datasources\MySQLDB;
+    use lib\datasources\DSMySQL;
 
     // ? No podem tenir una propietat de tipus MySQL ja que utilitza la llibreria PDO que no és serialitzable
     // ? Ens interessa serialitzar la classe per poder-la guardar a la sessió (el dataset és una propietat del model)
@@ -12,7 +12,7 @@
         public static function load(int $idUser):?self{
             $result = null;
             if($idUser>0){                
-                $mysql = MySQLDB::getInstance();
+                $mysql = DSMySQL::getInstance();
                 $dataset  = $mysql->find('marcatges', ['idUser'=>$idUser]);
                 $result = new self();
                 foreach($dataset as $regEntry){
@@ -31,7 +31,7 @@
 
         public function save(int $idUser):void{
             $lastEntry = $this->getLast();
-            $mysql = MySQLDB::getInstance();
+            $mysql = DSMySQL::getInstance();
             $data = [   'tipus' => $lastEntry->registerType,
                         'timestamp' => $lastEntry->registerTimestamp,
                         'idUser' => $idUser];

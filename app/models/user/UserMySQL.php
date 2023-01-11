@@ -1,6 +1,6 @@
 <?php 
     namespace app\models\user;
-    use app\datasources\MySQLDB;
+    use lib\datasources\DSMySQL;
 
     // ? No podem tenir una propietat de tipus MySQL ja que utilitza la llibreria PDO que no és serialitzable
     // ? Ens interessa serialitzar la classe per poder-la guardar a la sessió (el dataset és una propietat del model)
@@ -12,7 +12,7 @@
         public static function loadUser(string $email, string $pass):?self{
             $result = null;
             if(!empty($email) && !empty($pass)){
-                $mysql    = MySQLDB::getInstance();
+                $mysql    = DSMySQL::getInstance();
                 $dataset  = $mysql->findOne('users', ['email'=>strtolower($email)]);
                 $password = $dataset['password'] ?? '';
                 if(password_verify($pass,$password)){

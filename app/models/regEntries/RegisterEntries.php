@@ -2,7 +2,7 @@
     namespace app\models\regEntries;
 
     use \ArrayIterator;
-    use \lib\core\mvc\Model;
+    use \lib\mvc\Model;
 
     //Domain Model Class
     /** @SuppressWarnings(PHPMD.StaticAccess) */

@@ -1,5 +1,5 @@
 <?php 
-    use lib\core\mvc\Router;
+    use lib\mvc\Router;
 
     //GET ENDPOINTS
     Router::addRoute("GET",    "/",           "app\controllers\UserController",   "login");

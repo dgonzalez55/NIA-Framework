@@ -1,7 +1,7 @@
 <?php
     namespace app\models\user;
 
-    use lib\core\mvc\Model;
+    use lib\mvc\Model;
     use app\models\regEntries\RegisterEntries;
 
     //Domain Model Class

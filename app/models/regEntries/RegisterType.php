@@ -1,7 +1,7 @@
 <?php
     namespace app\models\regEntries;
 
-    use lib\core\EnumExtType;
+    use lib\enums\EnumExtType;
 
     //Definim els nostres enumerats extesos derivant la classe abstracte EnumExtType que ens hem creat
     final class RegisterType extends EnumExtType{

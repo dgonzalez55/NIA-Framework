@@ -1,6 +1,6 @@
 <?php 
     namespace app\models\regEntries;
-    use app\datasources\CookieDB;
+    use lib\datasources\DSCookie;
 
     // * Aquesta classe juga un paper de tipus ORM (Object Relational Mapping), mappeja les dades de la base de dades a objectes
 
@@ -9,7 +9,7 @@
         public static function load(int $idUser):?self{
             $result = null;
             if($idUser>0){                
-                $cookieDB = CookieDB::getInstance();
+                $cookieDB = DSCookie::getInstance();
                 $dataset  = $cookieDB->find('marcatges'.hash("sha512",$idUser));
                 $result = new self();
                 foreach($dataset as $regEntry){
@@ -27,7 +27,7 @@
         }
 
         public function save(int $idUser):void{
-            $cookieDB = CookieDB::getInstance();
+            $cookieDB = DSCookie::getInstance();
             $cookieDB->insert('marcatges'.hash("sha512",$idUser),$this->all());
         }
     }

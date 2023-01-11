@@ -1,8 +1,8 @@
 <?php  
     namespace app\controllers;
 
-    use lib\core\Session;
-    use lib\core\mvc\Controller;
+    use lib\mvc\Controller;
+    use lib\sessions\Session;
     use app\models\user\User;
 
     /** @SuppressWarnings(PHPMD.StaticAccess) */

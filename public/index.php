@@ -7,6 +7,6 @@
     require_once '../app/routes.php';
 
     //Posem en marxa l'enrutador MVC
-    use lib\core\mvc\Router;
+    use lib\mvc\Router;
     Router::run();
 
