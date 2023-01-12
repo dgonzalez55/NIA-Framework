@@ -8,6 +8,19 @@
             $this->model = null;
         }
 
+        public function redirect(string $url, array $params = [], int $code = 302){
+            if(!empty($params)){
+                foreach($params as $key => $value){
+                    $params[$key] = urlencode($key) . '=' . urlencode($value);
+                }
+                $params = implode('&',$params);
+                $url .= '?' . $params;
+            }
+            header("HTTP/1.1 $code");
+            header("Location: $url");
+            return;
+        }
+
         public function render(string $name,array $viewExtraParams = [],string $type = 'html'){
             //Obtenim dades del model
             $modelData = isset($this->model) ? $this->model->getViewData($name) : [];

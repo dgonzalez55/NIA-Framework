@@ -25,6 +25,7 @@
         }
   
         public static function set(string $key, $value){
+            if(!Session::isStarted()) Session::start();
             $_SESSION[$key] = $value;
         }
     
