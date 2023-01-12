@@ -2,7 +2,6 @@
     namespace app\controllers;
 
     use lib\mvc\Controller;
-    use lib\sessions\Session;
     use app\models\HelloWorldModel;
 
     /** @SuppressWarnings(PHPMD.StaticAccess) */
