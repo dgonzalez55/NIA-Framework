@@ -2,7 +2,6 @@
     namespace app\models;
 
     use lib\mvc\Model;
-    use app\models\regEntries\RegisterEntries;
 
     //Domain Model Class
     /** @SuppressWarnings(PHPMD.StaticAccess) */
