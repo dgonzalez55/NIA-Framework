@@ -29,6 +29,7 @@
         public static function addRoute(string $method, string $path, string $controller, string $action){
             $router = self::getInstance();
             $paramMatches = [];
+            $path = APP_BASE_URL . $path;
             //Capturem els paràmetres que segueixen la sintaxi {param}
             preg_match_all("/(?<={).+?(?=})/", $path, $paramMatches);
             $params = $paramMatches[0];

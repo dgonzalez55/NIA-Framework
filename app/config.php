@@ -1,7 +1,10 @@
 <?php
     //PUT YOUR CONFIG SETTINGS HERE
     define('APP_DOMAIN','localhost');
-    define('APP_BASE_URL','http://localhost/');
+    //? Cal emplenar sols quan el DocumentRoot no és la carpeta public (no s'ha d'incloure la barra final)
+    //? Exemple: http://localhost/NIA-Framework/public/ => APP_BASE_URL = '/NIA-Framework/public'
+    define('APP_BASE_URL',''); 
+    //? Cal incloure la carpeta arrel del projecte (imprescindible per funcionament autocarregador de classes)
     define('APP_BASE_PATH','C:/Users/dgonzalez/Desktop/NIA-Framework/');
     define('APP_SESSION_NAME','NIA_APP_SESSID');
     define('APP_SESSION_TIME',7200);

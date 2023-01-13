@@ -17,7 +17,7 @@
                 $url .= '?' . $params;
             }
             header("HTTP/1.1 $code");
-            header("Location: $url");
+            header("Location: ".APP_BASE_URL.$url);
             return;
         }
 
