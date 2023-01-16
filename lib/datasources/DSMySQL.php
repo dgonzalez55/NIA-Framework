@@ -68,8 +68,8 @@
             return $dataset[0] ?? [];
         }
 
-        public function insert(string $table, array $data):bool{
-            $result = false;
+        public function insert(string $table, array $data):int{
+            $result = 0;
             try{
                 if($this->dbConnection){
                     //Security checks
@@ -83,7 +83,8 @@
                     $values = implode(',', array_map(function($key){return ":$key";}, array_keys($data)));
                     $sql = "INSERT INTO $table($fields) VALUES ($values)";
                     $stmt = $this->dbConnection->prepare($sql);
-                    $result = $stmt->execute($data);
+                    $stmt->execute($data);
+                    $result = $this->dbConnection->lastInsertId();
                 }
             }catch(\PDOException $e){
                 echo 'Error: '.$e->getMessage();
@@ -91,8 +92,8 @@
             return $result;
         }
 
-        public function update(string $table, array $data, array $filter = []):bool{
-            $result = false;
+        public function update(string $table, array $data, array $filter = []):int{
+            $result = 0;
             try{
                 if($this->dbConnection){
                     //Security checks
@@ -114,7 +115,8 @@
                     }
                     $sql = "UPDATE $table $set $where";
                     $stmt = $this->dbConnection->prepare($sql);
-                    $result = $stmt->execute(array_merge($data, $filter));
+                    $stmt->execute(array_merge($data, $filter));
+                    $result = $stmt->rowCount();
                 }
             }catch(\PDOException $e){
                 echo 'Error: '.$e->getMessage();
@@ -122,8 +124,8 @@
             return $result;
         }
 
-        public function delete(string $table, array $filter = []):bool{
-            $result = false;
+        public function delete(string $table, array $filter = []):int{
+            $result = 0;
             try{
                 if($this->dbConnection){
                     //Security checks
@@ -140,7 +142,8 @@
                     }
                     $sql = "DELETE FROM $table $where";
                     $stmt = $this->dbConnection->prepare($sql);
-                    $result = $stmt->execute($filter);
+                    $stmt->execute($filter);
+                    $result = $stmt->rowCount();
                 }
             }catch(\PDOException $e){
                 echo 'Error: '.$e->getMessage();
@@ -163,7 +166,7 @@
         }
 
         //Aquest mètode no pertany a la interfície DataSource, però s'hi podria afegir si convingués
-        public function lastInsertedId():int{
+        public function lastInsertId():int{
             $result = -1;
             try{
                 if($this->dbConnection){

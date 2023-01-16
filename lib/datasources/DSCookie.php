@@ -38,24 +38,24 @@
             return [];
         }
 
-        public function insert(string $table, array $data):bool{
-            $result = false;
+        public function insert(string $table, array $data):int{
+            $result = 0;
             if(!empty($table) && !empty($data)){
                 $cookieName = "db_".$table;
                 $cookieValue = json_encode($data);
                 setcookie($cookieName,$cookieValue,0,'/',APP_DOMAIN,true,true);
-                $result = true;
+                $result = 1;
             }
             return $result;
         }
         
         //TODO: Implementar aquest mètode
-        public function delete(string $table, array $filter = []):bool{
+        public function delete(string $table, array $filter = []):int{
             return false;
         }
 
         //TODO: Implementar aquest mètode
-        public function update(string $table, array $data, array $filter = []):bool{
+        public function update(string $table, array $data, array $filter = []):int{
             return false;
         }
         

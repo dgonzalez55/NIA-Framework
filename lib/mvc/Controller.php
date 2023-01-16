@@ -21,15 +21,17 @@
             return;
         }
 
-        public function render(string $name,array $viewExtraParams = [],string $type = 'html'){
+        public function render(string $name,array $viewExtraParams = [],string $type = 'html'):string{
             //Obtenim dades del model
             $modelData = isset($this->model) ? $this->model->getViewData($name) : [];
             //Fusionem dades del model amb dades extra injectades pel controlador
             $modelData += $viewExtraParams;
             //Carreguem la vista
             $view = new View($name, $modelData, $type);
-            $view->render();
+            $out  = $view->render();
             //Alliberem memòria una vegada carregada la vista
             unset($view);
+            //Retornem la vista renderitzada
+            return $out;
         }
     }

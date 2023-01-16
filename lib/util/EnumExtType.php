@@ -1,5 +1,5 @@
 <?php
-    namespace lib\enums;
+    namespace lib\util;
     use \ReflectionClass;
 
     //Ens muntem una classe pels enumerats (no existeixen en PHP anteriors al 8)

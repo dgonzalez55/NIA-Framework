@@ -12,7 +12,8 @@
             $this->type = $type;
         }
 
-        final public function render(){
+        final public function render():string{
+            $headersSent = true;
             switch ($this->type){
                 case 'xml':
                     header('Content-type: text/xml; charset=UTF-8');
@@ -20,15 +21,22 @@
                 case 'json':
                     header("Content-Type: application/json; charset=UTF-8");
                     break;
-                default:
+                case 'html':
                     header("Content-Type: text/html; charset=UTF-8");
+                    break;
+                default : $headersSent = false;
             }
-            require_once APP_BASE_PATH . "app/views/layouts/{$this->type}.php";
+            $content = $this->content("app/views/layouts/","{$this->type}");
+            if($headersSent) echo $content;
+            
+            return $content;
         }
 
-        final public function content(){
+        final public function content(string $viewBasePath = "app/views/", string $viewFileName = "", string $ext = ".php"):string{
             ob_start();
-            require_once APP_BASE_PATH . "app/views/{$this->name}.php";
+            $viewFilePath  = APP_BASE_PATH . $viewBasePath . "/";
+            $viewFilePath .= $viewFileName == "" ? "{$this->name}$ext" : $viewFileName.$ext;
+            require_once $viewFilePath;
             $out = ob_get_contents();
             ob_end_clean();
             return $out;
@@ -36,5 +44,9 @@
 
         public function __get($key){
             return isset($this->modelView) ? (isset($this->modelView[$key]) ? $this->modelView[$key] : "") : "";
+        }
+
+        public function __isset($key){
+            return isset($this->modelView) ? isset($this->modelView[$key]) : false;
         }
     }
