@@ -17,8 +17,7 @@ If you have any questions, comments or concerns regarding NIA Framework, please 
 
 * About NIA
 * Installation
-* Example Usage
-* Usage 
+* Configuration 
 
 ## About NIA ℹ
 
