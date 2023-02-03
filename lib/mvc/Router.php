@@ -30,6 +30,8 @@
             $router = self::getInstance();
             $paramMatches = [];
             $path = APP_BASE_URL . $path;
+            //Afegim el namespace de la classe controladora si no hi és ja
+            $controller = strpos($controller,'app\\controllers\\',0) === 0 ? $controller : 'app\\controllers\\' . $controller;
             //Capturem els paràmetres que segueixen la sintaxi {param}
             preg_match_all("/(?<={).+?(?=})/", $path, $paramMatches);
             $params = $paramMatches[0];
@@ -55,8 +57,18 @@
             $router = self::getInstance();
             $method = $_SERVER['REQUEST_METHOD'];
             $path   = $_SERVER['REQUEST_URI'];
-            $params = $_REQUEST;
+            $queryParams = [];
+            $params = [];
+            parse_str(file_get_contents("php://input"),$params);
             $path   = preg_replace("/\?.*/", "", $path);
+
+            // Check for query parameters in the URL
+            $query = parse_url($_SERVER['REQUEST_URI'], PHP_URL_QUERY);
+            if ($query) {
+                parse_str($query, $queryParams);
+                $params = array_merge($params, $queryParams);
+            }
+
             foreach($router->routing[$method] as $route){
                 $matches=[];
                 if(preg_match($route['pattern'], $path, $matches)){

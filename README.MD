@@ -1,11 +1,11 @@
-[![License](https://img.shields.io/badge/license-MIT-green)](https://opensource.org/licenses/MIT) ![Stable Release](https://img.shields.io/badge/beta_release-0.2.0-blue.svg)
+[![License](https://img.shields.io/badge/license-MIT-green)](https://opensource.org/licenses/MIT) ![Stable Release](https://img.shields.io/badge/beta_release-0.3.0-blue.svg)
 
 ![logo](./public/assets/img/NIA.png "NIA Logo")
 
 # Credits 🧑‍💻
 Developed by David González [dgonzalez55](https://github.com/dgonzalez55/)
 
-Latest Release: v0.2.0. January 16, 2023
+Latest Release: v0.3.0. February 03, 2023
 
 License: MIT
 
@@ -30,6 +30,7 @@ With NIA, projects are not tied to a long list of dependencies or external libra
 * Sessions management.
 * MVC management.
 * Mail management through PHPMailer.
+* API Rest support
 * Autoloader with composer support*.
 * Easy configuration through app/config.php
 * MVC routing through app/routes.php

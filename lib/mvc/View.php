@@ -12,16 +12,19 @@
             $this->type = $type;
         }
 
-        final public function render():string{
+        final public function render(int $statusCode = 200):string{
             $headersSent = true;
             switch ($this->type){
                 case 'xml':
+                    header("HTTP/1.1 $statusCode");
                     header('Content-type: text/xml; charset=UTF-8');
                     break;
                 case 'json':
+                    header("HTTP/1.1 $statusCode");
                     header("Content-Type: application/json; charset=UTF-8");
                     break;
                 case 'html':
+                    header("HTTP/1.1 $statusCode");
                     header("Content-Type: text/html; charset=UTF-8");
                     break;
                 default : $headersSent = false;

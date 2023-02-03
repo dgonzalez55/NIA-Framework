@@ -48,9 +48,19 @@
                     //Calculate offset
                     $offset = ($pageNumber-1)*$pageResults;
                     $where = '';
-                    foreach(array_keys($filter) as $key){
-                        $where .= empty($where) ? "WHERE " : " AND ";
-                        $where .= "$key = :$key";
+                    $conjunction = "AND";
+                    if (isset($filter['__conjunction'])) {
+                        $conjunction = $filter['__conjunction'];
+                        unset($filter['__conjunction']);
+                    }
+                    foreach($filter as $key => $value){
+                        $condition = "`$key` = :$key";
+                        if(is_array($value)){
+                            $condition = "`$key` ".key($value)." :$key";
+                            $filter[$key] = current($value);
+                        } 
+                        $where .= empty($where) ? "WHERE " : " $conjunction ";
+                        $where .=  $condition;
                     }
                     $sql = "SELECT * FROM $table $where LIMIT $pageResults OFFSET $offset";
                     $stmt = $this->dbConnection->prepare($sql);
@@ -79,7 +89,7 @@
                     if(!$this->dbConnection->query("SELECT 1 FROM $table")) {
                         throw new Exception('Table name invalid');
                     }
-                    $fields = implode(',', array_keys($data));
+                    $fields = '`'.implode('`,`', array_keys($data)).'`';
                     $values = implode(',', array_map(function($key){return ":$key";}, array_keys($data)));
                     $sql = "INSERT INTO $table($fields) VALUES ($values)";
                     $stmt = $this->dbConnection->prepare($sql);
@@ -106,12 +116,12 @@
                     $set = '';
                     foreach(array_keys($data) as $key){
                         $set .= empty($set) ? "SET " : ", ";
-                        $set .= "$key = :$key";
+                        $set .= "`$key` = :$key";
                     }
                     $where = '';
                     foreach(array_keys($filter) as $key){
                         $where .= empty($where) ? "WHERE " : " AND ";
-                        $where .= "$key = :$key";
+                        $where .= "`$key` = :$key";
                     }
                     $sql = "UPDATE $table $set $where";
                     $stmt = $this->dbConnection->prepare($sql);
@@ -138,7 +148,7 @@
                     $where = '';
                     foreach(array_keys($filter) as $key){
                         $where .= empty($where) ? "WHERE " : " AND ";
-                        $where .= "$key = :$key";
+                        $where .= "`$key` = :$key";
                     }
                     $sql = "DELETE FROM $table $where";
                     $stmt = $this->dbConnection->prepare($sql);
@@ -171,6 +181,44 @@
             try{
                 if($this->dbConnection){
                     $result = $this->dbConnection->lastInsertId();
+                }
+            }catch(\PDOException $e){
+                echo 'Error: '.$e->getMessage();
+            }
+            return $result;
+        }
+        
+        //Aquest mètode no pertany a la interfície DataSource, però s'hi podria afegir si convingués
+        public function rowCount(string $table, array $filter = []):int{
+            $result = -1;
+            try{
+                if($this->dbConnection){
+                    //Security checks
+                    if(empty($table)) {
+                        throw new Exception('Table name cannot be empty');
+                    }
+                    if(!$this->dbConnection->query("SELECT 1 FROM $table")) {
+                        throw new Exception('Table name invalid');
+                    }
+                    $where = '';
+                    $conjunction = "AND";
+                    if (isset($filter['__conjunction'])) {
+                        $conjunction = $filter['__conjunction'];
+                        unset($filter['__conjunction']);
+                    }
+                    foreach($filter as $key => $value){
+                        $condition = "`$key` = :$key";
+                        if(is_array($value)){
+                            $condition = "`$key` ".key($value)." :$key";
+                            $filter[$key] = current($value);
+                        } 
+                        $where .= empty($where) ? "WHERE " : " $conjunction ";
+                        $where .=  $condition;
+                    }
+                    $sql = "SELECT COUNT(*) FROM $table $where";
+                    $stmt = $this->dbConnection->prepare($sql);
+                    $stmt->execute($filter);
+                    $result = $stmt->fetchColumn();
                 }
             }catch(\PDOException $e){
                 echo 'Error: '.$e->getMessage();
