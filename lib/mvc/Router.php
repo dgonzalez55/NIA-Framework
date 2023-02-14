@@ -59,8 +59,13 @@
             $path   = $_SERVER['REQUEST_URI'];
             $queryParams = [];
             $params = [];
-            parse_str(file_get_contents("php://input"),$params);
             $path   = preg_replace("/\?.*/", "", $path);
+
+            parse_str(file_get_contents("php://input"),$params);
+            if (isset($_SERVER['CONTENT_TYPE']) && strpos($_SERVER['CONTENT_TYPE'], 'multipart/form-data') !== false) {
+                $params = array_merge($params, $_POST);
+                $params = array_merge($params, $_FILES);
+            }
 
             // Check for query parameters in the URL
             $query = parse_url($_SERVER['REQUEST_URI'], PHP_URL_QUERY);

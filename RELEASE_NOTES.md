@@ -1,6 +1,6 @@
 # NIA Framework Release Notes
 
-## Release 0.3.0 (Still in development)
+## Release 0.3.1 (Still in development)
 
 ### Enhancements
 - Add `rowCount()` method to `DSMySQL` class.
@@ -14,6 +14,7 @@
 - Add `json.php` to `layouts`
 - Add new config settings to `config.php`
 ### Fixes
+- Add `multipart/form-data` support on `Router` class to allow files upload.
 - Add field enclosing to `find()`,`insert()`,`update()`,`delete()` methods in `DSMySQL` to avoid problems with field names.
 
 ### Documentation
