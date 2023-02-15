@@ -1,11 +1,11 @@
-[![License](https://img.shields.io/badge/license-MIT-green)](https://opensource.org/licenses/MIT) ![Stable Release](https://img.shields.io/badge/beta_release-0.3.2-blue.svg)
+[![License](https://img.shields.io/badge/license-MIT-green)](https://opensource.org/licenses/MIT) ![Stable Release](https://img.shields.io/badge/beta_release-0.3.0-blue.svg)
 
 ![logo](./public/assets/img/NIA.png "NIA Logo")
 
 # Credits 🧑‍💻
 Developed by David González [dgonzalez55](https://github.com/dgonzalez55/)
 
-Latest Release: v0.3.2. February 14, 2023
+Latest Release: v0.3.0. February 15, 2023
 
 License: MIT
 

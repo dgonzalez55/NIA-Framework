@@ -1,8 +1,9 @@
 # NIA Framework Release Notes
 
-## Release 0.3.2 (Still in development)
+## Release 0.3.0 (Still in development)
 
 ### Enhancements
+- Add `FileUpload` wrapper class to easy file upload management.
 - Add `rowCount()` method to `DSMySQL` class.
 - Add special param `__conjunction` in `find()` method of `DSMySQL` allowing election between AND or OR conjuction.
 - Add operator option in `find()` method of `DSMySQL`. Now is possible to use LIKE, <,>,<=,>=,...
