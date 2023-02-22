@@ -18,7 +18,7 @@
             }
             header("HTTP/1.1 $statusCode");
             header("Location: ".APP_BASE_URL.$url);
-            return;
+            exit();
         }
 
         public function render(string $name,array $viewExtraParams = [],string $type = 'html', int $statusCode = 200):string{
