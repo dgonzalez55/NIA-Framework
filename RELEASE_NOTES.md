@@ -15,6 +15,8 @@
 - Add `json.php` to `layouts`
 - Add new config settings to `config.php`
 ### Fixes
+- Change own `autoload` for insensitive paths (Linux compatibility)
+- Add `exit()` in `redirect()` of `Controller`
 - Add `Options -Indexes` in `.htaccess` to prevent directory listing
 - Add `multipart/form-data` support on `Router` class to allow files upload.
 - Add field enclosing to `find()`,`insert()`,`update()`,`delete()` methods in `DSMySQL` to avoid problems with field names.

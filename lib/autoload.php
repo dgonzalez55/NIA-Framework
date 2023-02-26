@@ -7,10 +7,21 @@
         // Separate the namespace from the class name into $namespace and $className
         $nameSpace = substr($className, 0, strrpos($className, '/'));
         $className = substr($className, strrpos($className, '/') + 1);
-        // Convert the class name to a file path
-        $filePath = APP_BASE_PATH . "$nameSpace/$className.php";
-        // Convert the class name to a file path (vendor - composer)
-        $filePathExt = APP_BASE_PATH . "vendor/$nameSpace/src/$className.php";
-        // Include the file if it exists
-        file_exists($filePath) ? require $filePath : (file_exists($filePathExt) ? require $filePathExt : null);
+        // Define a list of directories to search for class files
+        $directories = array(
+            APP_BASE_PATH . $nameSpace . '/',
+            APP_BASE_PATH . strtolower($nameSpace) . '/',
+            APP_BASE_PATH . 'vendor/' . $nameSpace . '/src/',
+            APP_BASE_PATH . 'vendor/' . strtolower($nameSpace) . '/src/'
+        );
+        // Search for the class file in each directory
+        foreach ($directories as $directory) {
+            $files = glob($directory . '*.php');
+            foreach ($files as $file) {
+                if (strcasecmp(basename($file, '.php'), $className) === 0) {
+                    require $file;
+                    return;
+                }
+            }
+        }
     });
